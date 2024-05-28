@@ -29,7 +29,7 @@ export const BlogListSchema = Joi.object({
   abortEarly: false,
 });
 
-export const BlogDeleteSchema = Joi.object({
+export const BlogIdSchema = Joi.object({
   id: Joi.string()
     .hex()
     .length(24)
@@ -48,14 +48,14 @@ export const BlogUpsertSchema = Joi.object({
     .messages({ ...errorMessage }),
   title: Joi.string()
     .max(500)
-    .label("Caption")
+    .label("Title")
     .messages({ ...errorMessage }),
   description: Joi.string()
-    .label("Content")
+    .label("Description")
     .messages({ ...errorMessage }),
   category: Joi.string()
     .valid("Food", "Education", "Businessman", "Position")
-    .label("Content")
+    .label("Category")
     .messages({ ...errorMessage }),
 }).when('.id', {
   not: Joi.exist(),
@@ -63,16 +63,16 @@ export const BlogUpsertSchema = Joi.object({
     title: Joi.string()
       .required()
       .max(500)
-      .label("Caption")
+      .label("Title")
       .messages({ ...errorMessage }),
     description: Joi.string()
       .required()
-      .label("Content")
+      .label("Description")
       .messages({ ...errorMessage }),
     category: Joi.string()
       .required()
       .valid("Food", "Education", "Businessman", "Position")
-      .label("Content")
+      .label("Category")
       .messages({ ...errorMessage }),
   })
 }).options({

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import validationMiddleware from "../../middlewares/validation.middleware.js";
-import { BlogDeleteSchema, BlogListSchema, BlogUpsertSchema } from "./blog.validation.js";
-import { deleteBlog, listBlogs, upsertBlog } from "./blog.controller.js";
+import { BlogIdSchema, BlogListSchema, BlogUpsertSchema } from "./blog.validation.js";
+import { deleteBlog, getBlog, listBlogs, upsertBlog } from "./blog.controller.js";
 
 const BlogRouter = Router();
 
@@ -13,9 +13,15 @@ BlogRouter.post(
 
 BlogRouter.post(
   `/delete`,
-  validationMiddleware(BlogDeleteSchema),
+  validationMiddleware(BlogIdSchema),
   deleteBlog
 );
+
+BlogRouter.post(
+  `/get`,
+  validationMiddleware(BlogIdSchema),
+  getBlog
+)
 
 BlogRouter.post(
   `/list`,
