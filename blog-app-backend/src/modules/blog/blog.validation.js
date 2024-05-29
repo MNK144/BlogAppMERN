@@ -3,15 +3,16 @@ import { errorMessage } from "../../constants/validationErrors.js";
 
 export const BlogListSchema = Joi.object({
   search: Joi.string()
+    .allow("")
     .max(250)
     .label("Search")
     .messages({ ...errorMessage }),
   sort: Joi.string()
     .label("Sort")
-    .valid("ASC", "DESC")
+    .valid("asc", "desc")
     .messages({ ...errorMessage }),
   sort_field: Joi.string()
-    .valid("date")
+    .valid("createdAt")
     .label('SortField')
     .messages({ ...errorMessage }),
   limit: Joi.number()
@@ -35,6 +36,15 @@ export const BlogIdSchema = Joi.object({
     .length(24)
     .required()
     .label("ID")
+    .messages({ ...errorMessage }),
+}).options({
+  abortEarly: false,
+});
+
+export const BlogSlugSchema = Joi.object({
+  slug: Joi.string()
+    .required()
+    .label("Slug")
     .messages({ ...errorMessage }),
 }).options({
   abortEarly: false,
